@@ -75,6 +75,13 @@ Apple Silicon Mac에서 바로 설치하려면 아래 릴리스 파일을 다운
 - DMG: [veil-0.1.0-arm64.dmg](https://github.com/yldst-dev/veil/releases/download/v0.1.0/veil-0.1.0-arm64.dmg)
 - ZIP: [veil-0.1.0-arm64-mac.zip](https://github.com/yldst-dev/veil/releases/download/v0.1.0/veil-0.1.0-arm64-mac.zip)
 
+서명되지 않은 공개 빌드라 macOS에서 `손상되었기 때문에 열 수 없습니다` 경고가 뜰 수 있습니다.  
+이 경우 `veil.app`을 `응용 프로그램` 폴더로 옮긴 뒤 아래 명령으로 quarantine 속성을 제거한 다음 다시 실행하세요.
+
+```bash
+xattr -dr com.apple.quarantine /Applications/veil.app
+```
+
 소스에서 직접 설치하고 실행하려면:
 
 ```bash
