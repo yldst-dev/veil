@@ -25,6 +25,7 @@
     "test:watch": "vitest --root .",
     "rebuild:native": "electron-rebuild -f -w @cherrystudio/mac-system-ocr",
     "pack:mac": "npm run build && electron-builder --mac",
+    "pack:mac:public": "npm run build && electron-builder --mac --config.mac.identity=null",
     "postinstall": "patch-package && electron-builder install-app-deps && npm run rebuild:native"
   },
   "build": {
@@ -37,6 +38,8 @@
     },
     "files": [
       "dist/**/*",
+      "!dist/**/*.map",
+      "!**/*.map",
       "package.json"
     ],
     "extraResources": [
@@ -51,6 +54,7 @@
     ],
     "npmRebuild": true,
     "mac": {
+      "identity": null,
       "icon": "build/icon.icns",
       "category": "public.app-category.productivity",
       "target": [

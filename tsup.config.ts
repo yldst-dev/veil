@@ -9,7 +9,7 @@ export default defineConfig({
   outDir: 'dist',
   format: ['cjs'],
   target: 'node20',
-  sourcemap: true,
+  sourcemap: false,
   clean: true,
   splitting: false,
   treeshake: true,
