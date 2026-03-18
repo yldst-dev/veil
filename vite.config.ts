@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   root: path.resolve(__dirname, 'src/renderer'),
+  base: './',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
