@@ -1,6 +1,10 @@
 # veil
 
 <p align="center">
+  <img src="./docs/assets/readme-icon.png" alt="veil icon" width="88" />
+</p>
+
+<p align="center">
   <img src="./docs/assets/readme-screenshot.png" alt="veil screenshot" width="720" />
 </p>
 
