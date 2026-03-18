@@ -1,0 +1,937 @@
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/bin/darwin-arm64-145/mac-system-ocr.node b/node_modules/@cherrystudio/mac-system-ocr/bin/darwin-arm64-145/mac-system-ocr.node
+new file mode 100755
+index 0000000..03f1c8d
+Binary files /dev/null and b/node_modules/@cherrystudio/mac-system-ocr/bin/darwin-arm64-145/mac-system-ocr.node differ
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/Makefile b/node_modules/@cherrystudio/mac-system-ocr/build/Makefile
+index bfb583e..07b3cb3 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/build/Makefile
++++ b/node_modules/@cherrystudio/mac-system-ocr/build/Makefile
+@@ -331,8 +331,8 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
+ endif
+ 
+ quiet_cmd_regen_makefile = ACTION Regenerating $@
+-cmd_regen_makefile = cd $(srcdir); /Users/sumin/.npm-global/lib/node_modules/npm/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/sumin/Library/Caches/node-gyp/25.2.1" "-Dnode_gyp_dir=/Users/sumin/.npm-global/lib/node_modules/npm/node_modules/node-gyp" "-Dnode_lib_file=/Users/sumin/Library/Caches/node-gyp/25.2.1/<(target_arch)/node.lib" "-Dmodule_root_dir=/private/var/folders/rq/g92dvrfj1x7gy2tr9zxfff4c0000gq/T/tmp-15276-7KRJjIGJZY7W/node_modules/@cherrystudio/mac-system-ocr" "-Dnode_engine=v8" "--depth=." "-Goutput_dir=." "--generator-output=build" -I/private/var/folders/rq/g92dvrfj1x7gy2tr9zxfff4c0000gq/T/tmp-15276-7KRJjIGJZY7W/node_modules/@cherrystudio/mac-system-ocr/build/config.gypi -I/Users/sumin/.npm-global/lib/node_modules/npm/node_modules/node-gyp/addon.gypi -I/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/common.gypi "--toplevel-dir=." binding.gyp
+-Makefile: $(srcdir)/../../../../../../../../../../Users/sumin/.npm-global/lib/node_modules/npm/node_modules/node-gyp/addon.gypi $(srcdir)/../../../../../../../../../../Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/common.gypi $(srcdir)/binding.gyp $(srcdir)/build/config.gypi
++cmd_regen_makefile = cd $(srcdir); /Users/sumin/Documents/Projects/2026-1분기/Veil/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/sumin/.electron-gyp/41.0.2" "-Dnode_gyp_dir=/Users/sumin/Documents/Projects/2026-1분기/Veil/node_modules/node-gyp" "-Dnode_lib_file=/Users/sumin/.electron-gyp/41.0.2/<(target_arch)/node.lib" "-Dmodule_root_dir=/Users/sumin/Documents/Projects/2026-1분기/Veil/node_modules/@cherrystudio/mac-system-ocr" "-Dnode_engine=v8" "--depth=." "-Goutput_dir=." "--generator-output=build" -I/Users/sumin/Documents/Projects/2026-1분기/Veil/node_modules/@cherrystudio/mac-system-ocr/build/config.gypi -I/Users/sumin/Documents/Projects/2026-1분기/Veil/node_modules/node-gyp/addon.gypi -I/Users/sumin/.electron-gyp/41.0.2/include/node/common.gypi "--toplevel-dir=." binding.gyp
++Makefile: $(srcdir)/../../../../../../../.electron-gyp/41.0.2/include/node/common.gypi $(srcdir)/../../node-gyp/addon.gypi $(srcdir)/binding.gyp $(srcdir)/build/config.gypi
+ 	$(call do_cmd,regen_makefile)
+ 
+ # "all" is a concatenation of the "all" targets from all the included
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/Release/.deps/Release/obj.target/mac_system_ocr/lib/binding.o.d b/node_modules/@cherrystudio/mac-system-ocr/build/Release/.deps/Release/obj.target/mac_system_ocr/lib/binding.o.d
+index 36e8b57..9faadff 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/build/Release/.deps/Release/obj.target/mac_system_ocr/lib/binding.o.d
++++ b/node_modules/@cherrystudio/mac-system-ocr/build/Release/.deps/Release/obj.target/mac_system_ocr/lib/binding.o.d
+@@ -1,13 +1,13 @@
+-cmd_Release/obj.target/mac_system_ocr/lib/binding.o := cc -o Release/obj.target/mac_system_ocr/lib/binding.o ../lib/binding.c '-DNODE_GYP_MODULE_NAME=mac_system_ocr' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_GLIBCXX_USE_CXX11_ABI=1' '-D_FILE_OFFSET_BITS=64' '-D_DARWIN_USE_64_BIT_INODE=1' '-D_LARGEFILE_SOURCE' '-DBUILDING_NODE_EXTENSION' -I/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node -I/Users/sumin/Library/Caches/node-gyp/25.2.1/src -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/openssl/config -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/openssl/openssl/include -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/uv/include -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/zlib -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/v8/include -I../undefined  -O3 -gdwarf-2 -fno-strict-aliasing -mmacosx-version-min=10.15 -arch arm64 -Wall -Wendif-labels -W -Wno-unused-parameter -ObjC++ -MMD -MF ./Release/.deps/Release/obj.target/mac_system_ocr/lib/binding.o.d.raw   -c
++cmd_Release/obj.target/mac_system_ocr/lib/binding.o := cc -o Release/obj.target/mac_system_ocr/lib/binding.o ../lib/binding.c '-DNODE_GYP_MODULE_NAME=mac_system_ocr' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_GLIBCXX_USE_CXX11_ABI=1' '-D_FILE_OFFSET_BITS=64' '-DELECTRON_ENSURE_CONFIG_GYPI' '-D_DARWIN_USE_64_BIT_INODE=1' '-D_LARGEFILE_SOURCE' '-DUSING_ELECTRON_CONFIG_GYPI' '-DV8_COMPRESS_POINTERS' '-DV8_COMPRESS_POINTERS_IN_MULTIPLE_CAGES' '-DV8_31BIT_SMIS_ON_64BIT_ARCH' '-DV8_ENABLE_SANDBOX' '-DV8_EXTERNAL_CODE_SPACE' '-DOPENSSL_NO_PINSHARED' '-DOPENSSL_THREADS' '-DOPENSSL_NO_ASM' '-DBUILDING_NODE_EXTENSION' -I/Users/sumin/.electron-gyp/41.0.2/include/node -I/Users/sumin/.electron-gyp/41.0.2/src -I/Users/sumin/.electron-gyp/41.0.2/deps/openssl/config -I/Users/sumin/.electron-gyp/41.0.2/deps/openssl/openssl/include -I/Users/sumin/.electron-gyp/41.0.2/deps/uv/include -I/Users/sumin/.electron-gyp/41.0.2/deps/zlib -I/Users/sumin/.electron-gyp/41.0.2/deps/v8/include -I../undefined  -O3 -gdwarf-2 -fno-strict-aliasing -mmacosx-version-min=10.15 -arch arm64 -Wall -Wendif-labels -W -Wno-unused-parameter -ObjC++ -MMD -MF ./Release/.deps/Release/obj.target/mac_system_ocr/lib/binding.o.d.raw   -c
+ Release/obj.target/mac_system_ocr/lib/binding.o: ../lib/binding.c \
+-  /Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/node_api.h \
+-  /Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/js_native_api.h \
+-  /Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/js_native_api_types.h \
+-  /Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/node_api_types.h \
++  /Users/sumin/.electron-gyp/41.0.2/include/node/node_api.h \
++  /Users/sumin/.electron-gyp/41.0.2/include/node/js_native_api.h \
++  /Users/sumin/.electron-gyp/41.0.2/include/node/js_native_api_types.h \
++  /Users/sumin/.electron-gyp/41.0.2/include/node/node_api_types.h \
+   ../lib/ocr.h
+ ../lib/binding.c:
+-/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/node_api.h:
+-/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/js_native_api.h:
+-/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/js_native_api_types.h:
+-/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node/node_api_types.h:
++/Users/sumin/.electron-gyp/41.0.2/include/node/node_api.h:
++/Users/sumin/.electron-gyp/41.0.2/include/node/js_native_api.h:
++/Users/sumin/.electron-gyp/41.0.2/include/node/js_native_api_types.h:
++/Users/sumin/.electron-gyp/41.0.2/include/node/node_api_types.h:
+ ../lib/ocr.h:
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/Release/.deps/Release/obj.target/mac_system_ocr/lib/ocr.o.d b/node_modules/@cherrystudio/mac-system-ocr/build/Release/.deps/Release/obj.target/mac_system_ocr/lib/ocr.o.d
+index a92846e..16d12bc 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/build/Release/.deps/Release/obj.target/mac_system_ocr/lib/ocr.o.d
++++ b/node_modules/@cherrystudio/mac-system-ocr/build/Release/.deps/Release/obj.target/mac_system_ocr/lib/ocr.o.d
+@@ -1,4 +1,4 @@
+-cmd_Release/obj.target/mac_system_ocr/lib/ocr.o := c++ '-DNODE_GYP_MODULE_NAME=mac_system_ocr' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_GLIBCXX_USE_CXX11_ABI=1' '-D_FILE_OFFSET_BITS=64' '-D_DARWIN_USE_64_BIT_INODE=1' '-D_LARGEFILE_SOURCE' '-DBUILDING_NODE_EXTENSION' -I/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node -I/Users/sumin/Library/Caches/node-gyp/25.2.1/src -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/openssl/config -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/openssl/openssl/include -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/uv/include -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/zlib -I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/v8/include -I../undefined  -O3 -gdwarf-2 -fno-strict-aliasing -mmacosx-version-min=10.15 -arch arm64 -Wall -Wendif-labels -W -Wno-unused-parameter -std=gnu++20 -stdlib=libc++ -fno-rtti -fno-exceptions -ObjC++ -fobjc-arc -MMD -MF ./Release/.deps/Release/obj.target/mac_system_ocr/lib/ocr.o.d.raw -c -o Release/obj.target/mac_system_ocr/lib/ocr.o ../lib/ocr.mm
++cmd_Release/obj.target/mac_system_ocr/lib/ocr.o := c++ '-DNODE_GYP_MODULE_NAME=mac_system_ocr' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_GLIBCXX_USE_CXX11_ABI=1' '-D_FILE_OFFSET_BITS=64' '-DELECTRON_ENSURE_CONFIG_GYPI' '-D_DARWIN_USE_64_BIT_INODE=1' '-D_LARGEFILE_SOURCE' '-DUSING_ELECTRON_CONFIG_GYPI' '-DV8_COMPRESS_POINTERS' '-DV8_COMPRESS_POINTERS_IN_MULTIPLE_CAGES' '-DV8_31BIT_SMIS_ON_64BIT_ARCH' '-DV8_ENABLE_SANDBOX' '-DV8_EXTERNAL_CODE_SPACE' '-DOPENSSL_NO_PINSHARED' '-DOPENSSL_THREADS' '-DOPENSSL_NO_ASM' '-DBUILDING_NODE_EXTENSION' -I/Users/sumin/.electron-gyp/41.0.2/include/node -I/Users/sumin/.electron-gyp/41.0.2/src -I/Users/sumin/.electron-gyp/41.0.2/deps/openssl/config -I/Users/sumin/.electron-gyp/41.0.2/deps/openssl/openssl/include -I/Users/sumin/.electron-gyp/41.0.2/deps/uv/include -I/Users/sumin/.electron-gyp/41.0.2/deps/zlib -I/Users/sumin/.electron-gyp/41.0.2/deps/v8/include -I../undefined  -O3 -gdwarf-2 -fno-strict-aliasing -mmacosx-version-min=10.15 -arch arm64 -Wall -Wendif-labels -W -Wno-unused-parameter -std=gnu++20 -stdlib=libc++ -fno-rtti -fno-exceptions -ObjC++ -fobjc-arc -MMD -MF ./Release/.deps/Release/obj.target/mac_system_ocr/lib/ocr.o.d.raw -c -o Release/obj.target/mac_system_ocr/lib/ocr.o ../lib/ocr.mm
+ Release/obj.target/mac_system_ocr/lib/ocr.o: ../lib/ocr.mm ../lib/ocr.h
+ ../lib/ocr.mm:
+ ../lib/ocr.h:
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/Release/.forge-meta b/node_modules/@cherrystudio/mac-system-ocr/build/Release/.forge-meta
+new file mode 100644
+index 0000000..ab2123d
+--- /dev/null
++++ b/node_modules/@cherrystudio/mac-system-ocr/build/Release/.forge-meta
+@@ -0,0 +1 @@
++arm64--145
+\ No newline at end of file
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/Release/mac_system_ocr.node b/node_modules/@cherrystudio/mac-system-ocr/build/Release/mac_system_ocr.node
+index e61d169..03f1c8d 100755
+Binary files a/node_modules/@cherrystudio/mac-system-ocr/build/Release/mac_system_ocr.node and b/node_modules/@cherrystudio/mac-system-ocr/build/Release/mac_system_ocr.node differ
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/Release/obj.target/mac_system_ocr/lib/binding.o b/node_modules/@cherrystudio/mac-system-ocr/build/Release/obj.target/mac_system_ocr/lib/binding.o
+index cfe6f61..67260ee 100644
+Binary files a/node_modules/@cherrystudio/mac-system-ocr/build/Release/obj.target/mac_system_ocr/lib/binding.o and b/node_modules/@cherrystudio/mac-system-ocr/build/Release/obj.target/mac_system_ocr/lib/binding.o differ
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/Release/obj.target/mac_system_ocr/lib/ocr.o b/node_modules/@cherrystudio/mac-system-ocr/build/Release/obj.target/mac_system_ocr/lib/ocr.o
+index a461b9f..125b9e4 100644
+Binary files a/node_modules/@cherrystudio/mac-system-ocr/build/Release/obj.target/mac_system_ocr/lib/ocr.o and b/node_modules/@cherrystudio/mac-system-ocr/build/Release/obj.target/mac_system_ocr/lib/ocr.o differ
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/config.gypi b/node_modules/@cherrystudio/mac-system-ocr/build/config.gypi
+index 063232e..c7be982 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/build/config.gypi
++++ b/node_modules/@cherrystudio/mac-system-ocr/build/config.gypi
+@@ -20,9 +20,9 @@
+     "xcode_configuration_platform": "arm64"
+   },
+   "variables": {
+-    "arm_fpu": "neon",
+     "asan": 0,
+-    "clang": 1,
++    "build_v8_with_gn": "false",
++    "built_with_electron": 1,
+     "control_flow_guard": "false",
+     "coverage": "false",
+     "dcheck_always_on": 0,
+@@ -33,16 +33,17 @@
+     "enable_pgo_use": "false",
+     "error_on_warn": "false",
+     "force_dynamic_crt": 0,
+-    "host_arch": "arm64",
+-    "icu_gyp_path": "tools/icu/icu-system.gyp",
++    "host_arch": "x64",
++    "icu_data_in": "..\\..\\deps\\icu-tmp\\icudt78l.dat",
++    "icu_endianness": "l",
++    "icu_gyp_path": "tools/icu/icu-generic.gyp",
++    "icu_path": "deps/icu-small",
+     "icu_small": "false",
+     "icu_ver_major": "78",
+     "libdir": "lib",
+-    "llvm_version": "17.0",
++    "llvm_version": "0.0",
+     "napi_build_version": "10",
+     "node_builtin_shareable_builtins": [
+-      "deps/cjs-module-lexer/lexer.js",
+-      "deps/cjs-module-lexer/dist/lexer.js",
+       "deps/undici/undici.js",
+       "deps/amaro/dist/index.js"
+     ],
+@@ -74,7 +75,6 @@
+       "test/cctest/test_platform.cc",
+       "test/cctest/test_quic_cid.cc",
+       "test/cctest/test_quic_error.cc",
+-      "test/cctest/test_quic_preferredaddress.cc",
+       "test/cctest/test_quic_tokens.cc",
+       "test/cctest/test_report.cc",
+       "test/cctest/test_sockaddr.cc",
+@@ -88,8 +88,8 @@
+     "node_enable_v8_vtunejit": "false",
+     "node_enable_v8windbg": "false",
+     "node_fipsinstall": "false",
+-    "node_install_corepack": "false",
+-    "node_install_npm": "false",
++    "node_install_corepack": "true",
++    "node_install_npm": "true",
+     "node_library_files": [
+       "lib/_http_agent.js",
+       "lib/_http_client.js",
+@@ -130,6 +130,7 @@
+       "lib/internal/abort_controller.js",
+       "lib/internal/assert.js",
+       "lib/internal/assert/assertion_error.js",
++      "lib/internal/assert/calltracker.js",
+       "lib/internal/assert/myers_diff.js",
+       "lib/internal/assert/utils.js",
+       "lib/internal/async_context_frame.js",
+@@ -195,6 +196,8 @@
+       "lib/internal/dns/promises.js",
+       "lib/internal/dns/utils.js",
+       "lib/internal/encoding.js",
++      "lib/internal/encoding/single-byte.js",
++      "lib/internal/encoding/util.js",
+       "lib/internal/error_serdes.js",
+       "lib/internal/errors.js",
+       "lib/internal/errors/error_source.js",
+@@ -255,6 +258,7 @@
+       "lib/internal/modules/esm/formats.js",
+       "lib/internal/modules/esm/get_format.js",
+       "lib/internal/modules/esm/hooks.js",
++      "lib/internal/modules/esm/initialize_import_meta.js",
+       "lib/internal/modules/esm/load.js",
+       "lib/internal/modules/esm/loader.js",
+       "lib/internal/modules/esm/module_job.js",
+@@ -440,82 +444,91 @@
+       "lib/worker_threads.js",
+       "lib/zlib.js"
+     ],
+-    "node_module_version": 141,
++    "node_module_version": 145,
+     "node_no_browser_globals": "false",
+-    "node_prefix": "/opt/homebrew/Cellar/node/25.2.1",
++    "node_prefix": "\\usr\\local",
++    "node_quic": "false",
+     "node_release_urlbase": "",
+     "node_shared": "false",
+     "node_shared_ada": "false",
+-    "node_shared_brotli": "true",
+-    "node_shared_cares": "true",
++    "node_shared_brotli": "false",
++    "node_shared_cares": "false",
++    "node_shared_gtest": "false",
++    "node_shared_hdr_histogram": "false",
+     "node_shared_http_parser": "false",
+-    "node_shared_libuv": "true",
+-    "node_shared_nghttp2": "true",
+-    "node_shared_nghttp3": "true",
+-    "node_shared_ngtcp2": "true",
+-    "node_shared_openssl": "true",
+-    "node_shared_simdjson": "true",
++    "node_shared_libuv": "false",
++    "node_shared_merve": "false",
++    "node_shared_nbytes": "false",
++    "node_shared_nghttp2": "false",
++    "node_shared_nghttp3": "false",
++    "node_shared_ngtcp2": "false",
++    "node_shared_openssl": "false",
++    "node_shared_simdjson": "false",
+     "node_shared_simdutf": "false",
+-    "node_shared_sqlite": "true",
+-    "node_shared_uvwasi": "true",
+-    "node_shared_zlib": "true",
+-    "node_shared_zstd": "true",
++    "node_shared_sqlite": "false",
++    "node_shared_uvwasi": "false",
++    "node_shared_zlib": "false",
++    "node_shared_zstd": "false",
+     "node_tag": "",
+     "node_target_type": "executable",
+     "node_use_amaro": "true",
+     "node_use_bundled_v8": "true",
+-    "node_use_node_code_cache": "true",
+-    "node_use_node_snapshot": "true",
++    "node_use_node_code_cache": "false",
++    "node_use_node_snapshot": "false",
+     "node_use_openssl": "true",
+     "node_use_sqlite": "true",
+     "node_use_v8_platform": "true",
+-    "node_with_ltcg": "false",
++    "node_with_ltcg": "true",
+     "node_without_node_options": "false",
+-    "node_write_snapshot_as_array_literals": "false",
++    "node_write_snapshot_as_array_literals": "true",
+     "openssl_is_fips": "false",
+-    "openssl_version": 811597839,
++    "openssl_no_asm": 1,
++    "openssl_quic": "false",
+     "ossfuzz": "false",
+-    "shlib_suffix": "141.dylib",
++    "shlib_suffix": "so.137",
+     "single_executable_application": "true",
+     "suppress_all_error_on_warn": "false",
+     "target_arch": "arm64",
+     "ubsan": 0,
+     "use_ccache_win": 0,
+     "use_prefix_to_find_headers": "false",
+-    "v8_enable_31bit_smis_on_64bit_arch": 0,
++    "using_electron_config_gypi": 1,
++    "v8_enable_31bit_smis_on_64bit_arch": 1,
+     "v8_enable_extensible_ro_snapshot": 0,
+-    "v8_enable_external_code_space": 0,
++    "v8_enable_external_code_space": 1,
+     "v8_enable_gdbjit": 0,
+     "v8_enable_hugepage": 0,
+     "v8_enable_i18n_support": 1,
+     "v8_enable_inspector": 1,
+     "v8_enable_javascript_promise_hooks": 1,
+     "v8_enable_lite_mode": 0,
+-    "v8_enable_maglev": 1,
++    "v8_enable_maglev": 0,
+     "v8_enable_object_print": 1,
+-    "v8_enable_pointer_compression": 0,
++    "v8_enable_pointer_compression": 1,
+     "v8_enable_pointer_compression_shared_cage": 0,
+-    "v8_enable_sandbox": 0,
++    "v8_enable_sandbox": 1,
+     "v8_enable_webassembly": 1,
+     "v8_optimized_debug": 1,
+     "v8_promise_internal_field_count": 1,
+     "v8_random_seed": 0,
+     "v8_trace_maps": 0,
+     "v8_use_siphash": 1,
+-    "want_separate_host_toolset": 0,
+-    "nodedir": "/Users/sumin/Library/Caches/node-gyp/25.2.1",
++    "want_separate_host_toolset": 1,
++    "nodedir": "/Users/sumin/.electron-gyp/41.0.2",
+     "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+     "standalone_static_library": 1,
++    "runtime": "electron",
++    "target": "41.0.2",
++    "build_from_source": "true",
+     "prefix": "/Users/sumin/.npm-global",
+     "user_agent": "npm/11.7.0 node/v25.2.1 darwin arm64 workspaces/false",
+     "cache": "/Users/sumin/.npm",
+     "node_gyp": "/Users/sumin/.npm-global/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
+-    "force": "true",
+     "npm_version": "11.7.0",
+     "init_module": "/Users/sumin/.npm-init.js",
+     "userconfig": "/Users/sumin/.npmrc",
+     "globalconfig": "/Users/sumin/.npm-global/etc/npmrc",
+-    "local_prefix": "/private/var/folders/rq/g92dvrfj1x7gy2tr9zxfff4c0000gq/T/tmp-15276-7KRJjIGJZY7W",
++    "local_prefix": "/Users/sumin/Documents/Projects/2026-1분기/Veil",
+     "global_prefix": "/Users/sumin/.npm-global"
+   }
+ }
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/build/mac_system_ocr.target.mk b/node_modules/@cherrystudio/mac-system-ocr/build/mac_system_ocr.target.mk
+index 9bdc0f1..332dce6 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/build/mac_system_ocr.target.mk
++++ b/node_modules/@cherrystudio/mac-system-ocr/build/mac_system_ocr.target.mk
+@@ -9,8 +9,18 @@ DEFS_Debug := \
+ 	'-DV8_DEPRECATION_WARNINGS=1' \
+ 	'-D_GLIBCXX_USE_CXX11_ABI=1' \
+ 	'-D_FILE_OFFSET_BITS=64' \
++	'-DELECTRON_ENSURE_CONFIG_GYPI' \
+ 	'-D_DARWIN_USE_64_BIT_INODE=1' \
+ 	'-D_LARGEFILE_SOURCE' \
++	'-DUSING_ELECTRON_CONFIG_GYPI' \
++	'-DV8_COMPRESS_POINTERS' \
++	'-DV8_COMPRESS_POINTERS_IN_MULTIPLE_CAGES' \
++	'-DV8_31BIT_SMIS_ON_64BIT_ARCH' \
++	'-DV8_ENABLE_SANDBOX' \
++	'-DV8_EXTERNAL_CODE_SPACE' \
++	'-DOPENSSL_NO_PINSHARED' \
++	'-DOPENSSL_THREADS' \
++	'-DOPENSSL_NO_ASM' \
+ 	'-DBUILDING_NODE_EXTENSION' \
+ 	'-DDEBUG' \
+ 	'-D_DEBUG'
+@@ -49,13 +59,13 @@ CFLAGS_OBJCC_Debug := \
+ 	-fobjc-arc
+ 
+ INCS_Debug := \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/src \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/openssl/config \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/openssl/openssl/include \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/uv/include \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/zlib \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/v8/include \
++	-I/Users/sumin/.electron-gyp/41.0.2/include/node \
++	-I/Users/sumin/.electron-gyp/41.0.2/src \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/openssl/config \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/openssl/openssl/include \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/uv/include \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/zlib \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/v8/include \
+ 	-I$(srcdir)/undefined
+ 
+ DEFS_Release := \
+@@ -65,8 +75,18 @@ DEFS_Release := \
+ 	'-DV8_DEPRECATION_WARNINGS=1' \
+ 	'-D_GLIBCXX_USE_CXX11_ABI=1' \
+ 	'-D_FILE_OFFSET_BITS=64' \
++	'-DELECTRON_ENSURE_CONFIG_GYPI' \
+ 	'-D_DARWIN_USE_64_BIT_INODE=1' \
+ 	'-D_LARGEFILE_SOURCE' \
++	'-DUSING_ELECTRON_CONFIG_GYPI' \
++	'-DV8_COMPRESS_POINTERS' \
++	'-DV8_COMPRESS_POINTERS_IN_MULTIPLE_CAGES' \
++	'-DV8_31BIT_SMIS_ON_64BIT_ARCH' \
++	'-DV8_ENABLE_SANDBOX' \
++	'-DV8_EXTERNAL_CODE_SPACE' \
++	'-DOPENSSL_NO_PINSHARED' \
++	'-DOPENSSL_THREADS' \
++	'-DOPENSSL_NO_ASM' \
+ 	'-DBUILDING_NODE_EXTENSION'
+ 
+ # Flags passed to all source files.
+@@ -103,13 +123,13 @@ CFLAGS_OBJCC_Release := \
+ 	-fobjc-arc
+ 
+ INCS_Release := \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/include/node \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/src \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/openssl/config \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/openssl/openssl/include \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/uv/include \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/zlib \
+-	-I/Users/sumin/Library/Caches/node-gyp/25.2.1/deps/v8/include \
++	-I/Users/sumin/.electron-gyp/41.0.2/include/node \
++	-I/Users/sumin/.electron-gyp/41.0.2/src \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/openssl/config \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/openssl/openssl/include \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/uv/include \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/zlib \
++	-I/Users/sumin/.electron-gyp/41.0.2/deps/v8/include \
+ 	-I$(srcdir)/undefined
+ 
+ OBJS := \
+@@ -129,26 +149,26 @@ $(OBJS): GYP_OBJCXXFLAGS := $(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE))  $(CFLAGS_
+ 
+ # Suffix rules, putting all outputs into $(obj).
+ 
+-$(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.c FORCE_DO_CMD
+-	@$(call do_cmd,cc,1)
+-
+ $(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.mm FORCE_DO_CMD
+ 	@$(call do_cmd,objcxx,1)
+ 
+-# Try building from generated source, too.
+-
+-$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj).$(TOOLSET)/%.c FORCE_DO_CMD
++$(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.c FORCE_DO_CMD
+ 	@$(call do_cmd,cc,1)
+ 
++# Try building from generated source, too.
++
+ $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj).$(TOOLSET)/%.mm FORCE_DO_CMD
+ 	@$(call do_cmd,objcxx,1)
+ 
+-$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.c FORCE_DO_CMD
++$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj).$(TOOLSET)/%.c FORCE_DO_CMD
+ 	@$(call do_cmd,cc,1)
+ 
+ $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.mm FORCE_DO_CMD
+ 	@$(call do_cmd,objcxx,1)
+ 
++$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.c FORCE_DO_CMD
++	@$(call do_cmd,cc,1)
++
+ # End of this set of suffix rules
+ ### Rules for final target.
+ LDFLAGS_Debug := \
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/lib/binding.c b/node_modules/@cherrystudio/mac-system-ocr/lib/binding.c
+index 504226a..775b148 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/lib/binding.c
++++ b/node_modules/@cherrystudio/mac-system-ocr/lib/binding.c
+@@ -105,6 +105,9 @@ void CompleteOCR(napi_env env, napi_status status, void* data) {
+             for (size_t i = 0; i < work->result->observation_count; i++) {
+                 TextObservation* obs = &work->result->observations[i];
+                 napi_value obs_obj, obs_text, obs_confidence, obs_x, obs_y, obs_width, obs_height;
++                napi_value quadrilateral, top_left, top_right, bottom_left, bottom_right;
++                napi_value top_left_x, top_left_y, top_right_x, top_right_y;
++                napi_value bottom_left_x, bottom_left_y, bottom_right_x, bottom_right_y;
+                 
+                 napi_create_object(env, &obs_obj);
+                 napi_create_string_utf8(env, obs->text, NAPI_AUTO_LENGTH, &obs_text);
+@@ -121,6 +124,33 @@ void CompleteOCR(napi_env env, napi_status status, void* data) {
+                 napi_set_named_property(env, obs_obj, "width", obs_width);
+                 napi_set_named_property(env, obs_obj, "height", obs_height);
+ 
++                napi_create_object(env, &quadrilateral);
++                napi_create_object(env, &top_left);
++                napi_create_object(env, &top_right);
++                napi_create_object(env, &bottom_left);
++                napi_create_object(env, &bottom_right);
++                napi_create_double(env, obs->top_left_x, &top_left_x);
++                napi_create_double(env, obs->top_left_y, &top_left_y);
++                napi_create_double(env, obs->top_right_x, &top_right_x);
++                napi_create_double(env, obs->top_right_y, &top_right_y);
++                napi_create_double(env, obs->bottom_left_x, &bottom_left_x);
++                napi_create_double(env, obs->bottom_left_y, &bottom_left_y);
++                napi_create_double(env, obs->bottom_right_x, &bottom_right_x);
++                napi_create_double(env, obs->bottom_right_y, &bottom_right_y);
++                napi_set_named_property(env, top_left, "x", top_left_x);
++                napi_set_named_property(env, top_left, "y", top_left_y);
++                napi_set_named_property(env, top_right, "x", top_right_x);
++                napi_set_named_property(env, top_right, "y", top_right_y);
++                napi_set_named_property(env, bottom_left, "x", bottom_left_x);
++                napi_set_named_property(env, bottom_left, "y", bottom_left_y);
++                napi_set_named_property(env, bottom_right, "x", bottom_right_x);
++                napi_set_named_property(env, bottom_right, "y", bottom_right_y);
++                napi_set_named_property(env, quadrilateral, "topLeft", top_left);
++                napi_set_named_property(env, quadrilateral, "topRight", top_right);
++                napi_set_named_property(env, quadrilateral, "bottomLeft", bottom_left);
++                napi_set_named_property(env, quadrilateral, "bottomRight", bottom_right);
++                napi_set_named_property(env, obs_obj, "quadrilateral", quadrilateral);
++                
+                 napi_set_element(env, observations, i, obs_obj);
+             }
+         } else {
+@@ -197,6 +227,51 @@ static bool GetOptionsFromObject(napi_env env, napi_value options, OCROptions* o
+     return true;
+ }
+ 
++napi_value GetSupportedRecognitionLanguages(napi_env env, napi_callback_info info) {
++    size_t argc = 1;
++    napi_value args[1];
++    napi_get_cb_info(env, info, &argc, args, NULL, NULL);
++
++    OCROptions options = {
++        .languages = "en-US",
++        .recognition_level = OCR_RECOGNITION_LEVEL_ACCURATE,
++        .min_confidence = 0.0
++    };
++
++    if (argc > 0 && args[0] != NULL) {
++        if (!GetOptionsFromObject(env, args[0], &options)) {
++            napi_throw_error(env, NULL, "Invalid options");
++            return NULL;
++        }
++    }
++
++    char* error_message = NULL;
++    size_t language_count = 0;
++    char** languages = get_supported_recognition_languages(&options, &language_count, &error_message);
++
++    if (options.languages && strcmp(options.languages, "en-US") != 0) {
++        free((void*)options.languages);
++    }
++
++    if (error_message) {
++        napi_throw_error(env, NULL, error_message);
++        free(error_message);
++        return NULL;
++    }
++
++    napi_value result;
++    napi_create_array_with_length(env, language_count, &result);
++
++    for (size_t index = 0; index < language_count; index++) {
++        napi_value locale;
++        napi_create_string_utf8(env, languages[index], NAPI_AUTO_LENGTH, &locale);
++        napi_set_element(env, result, index, locale);
++    }
++
++    free_supported_recognition_languages(languages, language_count);
++    return result;
++}
++
+ napi_value Recognize(napi_env env, napi_callback_info info) {
+     size_t argc = 2;
+     napi_value args[2];
+@@ -366,6 +441,9 @@ void CompleteBatchOCR(napi_env env, napi_status status, void* data) {
+                 for (size_t j = 0; j < result->observation_count; j++) {
+                     TextObservation* obs = &result->observations[j];
+                     napi_value obs_obj, obs_text, obs_confidence, obs_x, obs_y, obs_width, obs_height;
++                    napi_value quadrilateral, top_left, top_right, bottom_left, bottom_right;
++                    napi_value top_left_x, top_left_y, top_right_x, top_right_y;
++                    napi_value bottom_left_x, bottom_left_y, bottom_right_x, bottom_right_y;
+                     
+                     napi_create_object(env, &obs_obj);
+                     napi_create_string_utf8(env, obs->text, NAPI_AUTO_LENGTH, &obs_text);
+@@ -381,6 +459,32 @@ void CompleteBatchOCR(napi_env env, napi_status status, void* data) {
+                     napi_set_named_property(env, obs_obj, "y", obs_y);
+                     napi_set_named_property(env, obs_obj, "width", obs_width);
+                     napi_set_named_property(env, obs_obj, "height", obs_height);
++                    napi_create_object(env, &quadrilateral);
++                    napi_create_object(env, &top_left);
++                    napi_create_object(env, &top_right);
++                    napi_create_object(env, &bottom_left);
++                    napi_create_object(env, &bottom_right);
++                    napi_create_double(env, obs->top_left_x, &top_left_x);
++                    napi_create_double(env, obs->top_left_y, &top_left_y);
++                    napi_create_double(env, obs->top_right_x, &top_right_x);
++                    napi_create_double(env, obs->top_right_y, &top_right_y);
++                    napi_create_double(env, obs->bottom_left_x, &bottom_left_x);
++                    napi_create_double(env, obs->bottom_left_y, &bottom_left_y);
++                    napi_create_double(env, obs->bottom_right_x, &bottom_right_x);
++                    napi_create_double(env, obs->bottom_right_y, &bottom_right_y);
++                    napi_set_named_property(env, top_left, "x", top_left_x);
++                    napi_set_named_property(env, top_left, "y", top_left_y);
++                    napi_set_named_property(env, top_right, "x", top_right_x);
++                    napi_set_named_property(env, top_right, "y", top_right_y);
++                    napi_set_named_property(env, bottom_left, "x", bottom_left_x);
++                    napi_set_named_property(env, bottom_left, "y", bottom_left_y);
++                    napi_set_named_property(env, bottom_right, "x", bottom_right_x);
++                    napi_set_named_property(env, bottom_right, "y", bottom_right_y);
++                    napi_set_named_property(env, quadrilateral, "topLeft", top_left);
++                    napi_set_named_property(env, quadrilateral, "topRight", top_right);
++                    napi_set_named_property(env, quadrilateral, "bottomLeft", bottom_left);
++                    napi_set_named_property(env, quadrilateral, "bottomRight", bottom_right);
++                    napi_set_named_property(env, obs_obj, "quadrilateral", quadrilateral);
+                     
+                     napi_set_element(env, observations, j, obs_obj);
+                 }
+@@ -654,6 +758,9 @@ void CompleteBufferOCR(napi_env env, napi_status status, void* data) {
+             for (size_t i = 0; i < work->result->observation_count; i++) {
+                 TextObservation* obs = &work->result->observations[i];
+                 napi_value obs_obj, obs_text, obs_confidence, obs_x, obs_y, obs_width, obs_height;
++                napi_value quadrilateral, top_left, top_right, bottom_left, bottom_right;
++                napi_value top_left_x, top_left_y, top_right_x, top_right_y;
++                napi_value bottom_left_x, bottom_left_y, bottom_right_x, bottom_right_y;
+                 
+                 napi_create_object(env, &obs_obj);
+                 napi_create_string_utf8(env, obs->text, NAPI_AUTO_LENGTH, &obs_text);
+@@ -669,6 +776,32 @@ void CompleteBufferOCR(napi_env env, napi_status status, void* data) {
+                 napi_set_named_property(env, obs_obj, "y", obs_y);
+                 napi_set_named_property(env, obs_obj, "width", obs_width);
+                 napi_set_named_property(env, obs_obj, "height", obs_height);
++                napi_create_object(env, &quadrilateral);
++                napi_create_object(env, &top_left);
++                napi_create_object(env, &top_right);
++                napi_create_object(env, &bottom_left);
++                napi_create_object(env, &bottom_right);
++                napi_create_double(env, obs->top_left_x, &top_left_x);
++                napi_create_double(env, obs->top_left_y, &top_left_y);
++                napi_create_double(env, obs->top_right_x, &top_right_x);
++                napi_create_double(env, obs->top_right_y, &top_right_y);
++                napi_create_double(env, obs->bottom_left_x, &bottom_left_x);
++                napi_create_double(env, obs->bottom_left_y, &bottom_left_y);
++                napi_create_double(env, obs->bottom_right_x, &bottom_right_x);
++                napi_create_double(env, obs->bottom_right_y, &bottom_right_y);
++                napi_set_named_property(env, top_left, "x", top_left_x);
++                napi_set_named_property(env, top_left, "y", top_left_y);
++                napi_set_named_property(env, top_right, "x", top_right_x);
++                napi_set_named_property(env, top_right, "y", top_right_y);
++                napi_set_named_property(env, bottom_left, "x", bottom_left_x);
++                napi_set_named_property(env, bottom_left, "y", bottom_left_y);
++                napi_set_named_property(env, bottom_right, "x", bottom_right_x);
++                napi_set_named_property(env, bottom_right, "y", bottom_right_y);
++                napi_set_named_property(env, quadrilateral, "topLeft", top_left);
++                napi_set_named_property(env, quadrilateral, "topRight", top_right);
++                napi_set_named_property(env, quadrilateral, "bottomLeft", bottom_left);
++                napi_set_named_property(env, quadrilateral, "bottomRight", bottom_right);
++                napi_set_named_property(env, obs_obj, "quadrilateral", quadrilateral);
+                 
+                 napi_set_element(env, observations, i, obs_obj);
+             }
+@@ -858,6 +991,9 @@ void CompleteBatchBufferOCR(napi_env env, napi_status status, void* data) {
+                 for (size_t j = 0; j < result->observation_count; j++) {
+                     TextObservation* obs = &result->observations[j];
+                     napi_value obs_obj, obs_text, obs_confidence, obs_x, obs_y, obs_width, obs_height;
++                    napi_value quadrilateral, top_left, top_right, bottom_left, bottom_right;
++                    napi_value top_left_x, top_left_y, top_right_x, top_right_y;
++                    napi_value bottom_left_x, bottom_left_y, bottom_right_x, bottom_right_y;
+                     
+                     napi_create_object(env, &obs_obj);
+                     napi_create_string_utf8(env, obs->text, NAPI_AUTO_LENGTH, &obs_text);
+@@ -873,6 +1009,32 @@ void CompleteBatchBufferOCR(napi_env env, napi_status status, void* data) {
+                     napi_set_named_property(env, obs_obj, "y", obs_y);
+                     napi_set_named_property(env, obs_obj, "width", obs_width);
+                     napi_set_named_property(env, obs_obj, "height", obs_height);
++                    napi_create_object(env, &quadrilateral);
++                    napi_create_object(env, &top_left);
++                    napi_create_object(env, &top_right);
++                    napi_create_object(env, &bottom_left);
++                    napi_create_object(env, &bottom_right);
++                    napi_create_double(env, obs->top_left_x, &top_left_x);
++                    napi_create_double(env, obs->top_left_y, &top_left_y);
++                    napi_create_double(env, obs->top_right_x, &top_right_x);
++                    napi_create_double(env, obs->top_right_y, &top_right_y);
++                    napi_create_double(env, obs->bottom_left_x, &bottom_left_x);
++                    napi_create_double(env, obs->bottom_left_y, &bottom_left_y);
++                    napi_create_double(env, obs->bottom_right_x, &bottom_right_x);
++                    napi_create_double(env, obs->bottom_right_y, &bottom_right_y);
++                    napi_set_named_property(env, top_left, "x", top_left_x);
++                    napi_set_named_property(env, top_left, "y", top_left_y);
++                    napi_set_named_property(env, top_right, "x", top_right_x);
++                    napi_set_named_property(env, top_right, "y", top_right_y);
++                    napi_set_named_property(env, bottom_left, "x", bottom_left_x);
++                    napi_set_named_property(env, bottom_left, "y", bottom_left_y);
++                    napi_set_named_property(env, bottom_right, "x", bottom_right_x);
++                    napi_set_named_property(env, bottom_right, "y", bottom_right_y);
++                    napi_set_named_property(env, quadrilateral, "topLeft", top_left);
++                    napi_set_named_property(env, quadrilateral, "topRight", top_right);
++                    napi_set_named_property(env, quadrilateral, "bottomLeft", bottom_left);
++                    napi_set_named_property(env, quadrilateral, "bottomRight", bottom_right);
++                    napi_set_named_property(env, obs_obj, "quadrilateral", quadrilateral);
+                     
+                     napi_set_element(env, observations, j, obs_obj);
+                 }
+@@ -1056,6 +1218,10 @@ napi_value RecognizeBatchFromBuffer(napi_env env, napi_callback_info info) {
+ }
+ 
+ napi_value Init(napi_env env, napi_value exports) {
++    napi_value get_supported_recognition_languages_fn;
++    napi_create_function(env, NULL, 0, GetSupportedRecognitionLanguages, NULL, &get_supported_recognition_languages_fn);
++    napi_set_named_property(env, exports, "getSupportedRecognitionLanguages", get_supported_recognition_languages_fn);
++
+     napi_value recognize_fn;
+     napi_create_function(env, NULL, 0, Recognize, NULL, &recognize_fn);
+     napi_set_named_property(env, exports, "recognize", recognize_fn);
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/lib/ocr.h b/node_modules/@cherrystudio/mac-system-ocr/lib/ocr.h
+index 147d515..a168be8 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/lib/ocr.h
++++ b/node_modules/@cherrystudio/mac-system-ocr/lib/ocr.h
+@@ -27,6 +27,14 @@ typedef struct {
+     double y;             // y coordinate from Vision Framework (0.0-1.0, bottom-left origin)
+     double width;         // width from Vision Framework (0.0-1.0)
+     double height;        // height from Vision Framework (0.0-1.0)
++    double top_left_x;
++    double top_left_y;
++    double top_right_x;
++    double top_right_y;
++    double bottom_left_x;
++    double bottom_left_y;
++    double bottom_right_x;
++    double bottom_right_y;
+ } TextObservation;
+ 
+ /**
+@@ -115,6 +123,22 @@ OCRBatchResult* perform_batch_ocr(const char** image_paths, size_t count, const
+  */
+ OCRBatchResult* perform_batch_ocr_from_buffers(const void** buffers, const size_t* lengths, size_t count, const OCRBatchOptions* options);
+ 
++/**
++ * Get supported OCR recognition languages for the current macOS system.
++ * @param options OCR options, recognition level may affect supported locales
++ * @param count output count of returned locales
++ * @param error output error message
++ * @return dynamically allocated array of UTF-8 locale strings
++ */
++char** get_supported_recognition_languages(const OCROptions* options, size_t* count, char** error);
++
++/**
++ * Free supported OCR recognition languages array.
++ * @param languages array returned by get_supported_recognition_languages
++ * @param count number of entries
++ */
++void free_supported_recognition_languages(char** languages, size_t count);
++
+ /**
+  * Free OCR result
+  * @param result pointer to the OCR result to be freed, can be NULL
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/lib/ocr.mm b/node_modules/@cherrystudio/mac-system-ocr/lib/ocr.mm
+index f48850f..33f1b43 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/lib/ocr.mm
++++ b/node_modules/@cherrystudio/mac-system-ocr/lib/ocr.mm
+@@ -34,6 +34,148 @@ static int getSystemThreadCount(void) {
+     return (int)[[NSProcessInfo processInfo] processorCount];
+ }
+ 
++char** get_supported_recognition_languages(const OCROptions* options, size_t* count, char** error) {
++    if (count) {
++        *count = 0;
++    }
++    if (error) {
++        *error = NULL;
++    }
++
++    @autoreleasepool {
++        const OCROptions* opts = options ? options : &DEFAULT_OPTIONS;
++
++        VNRecognizeTextRequest* request = [[VNRecognizeTextRequest alloc] init];
++        request.recognitionLevel = opts->recognition_level == OCR_RECOGNITION_LEVEL_FAST ?
++            VNRequestTextRecognitionLevelFast :
++            VNRequestTextRecognitionLevelAccurate;
++
++        if (@available(macOS 12.0, *)) {
++            request.revision = VNRecognizeTextRequestRevision3;
++        }
++
++        NSError* recognitionError = nil;
++        NSArray<NSString*>* supportedLanguages = [request supportedRecognitionLanguagesAndReturnError:&recognitionError];
++
++        if (recognitionError || !supportedLanguages) {
++            if (error) {
++                NSString* message = recognitionError.localizedDescription ?: @"Failed to fetch supported OCR recognition languages.";
++                *error = strdup(message.UTF8String);
++            }
++            return NULL;
++        }
++
++        NSUInteger languageCount = supportedLanguages.count;
++        if (count) {
++            *count = languageCount;
++        }
++
++        if (languageCount == 0) {
++            return NULL;
++        }
++
++        char** result = (char**)calloc(languageCount, sizeof(char*));
++        if (!result) {
++            if (error) {
++                *error = strdup("Failed to allocate supported OCR recognition language list.");
++            }
++            if (count) {
++                *count = 0;
++            }
++            return NULL;
++        }
++
++        for (NSUInteger index = 0; index < languageCount; index++) {
++            NSString* locale = supportedLanguages[index];
++            result[index] = strdup(locale.UTF8String);
++        }
++
++        return result;
++    }
++}
++
++void free_supported_recognition_languages(char** languages, size_t count) {
++    if (!languages) {
++        return;
++    }
++
++    for (size_t index = 0; index < count; index++) {
++        if (languages[index]) {
++            free(languages[index]);
++        }
++    }
++
++    free(languages);
++}
++
++static NSDictionary* CreateObservationData(NSString* text, VNConfidence confidence, VNRectangleObservation* rectangleObservation) {
++    CGRect boundingBox = rectangleObservation.boundingBox;
++    return @{
++        @"text": text,
++        @"confidence": @(confidence),
++        @"x": @(boundingBox.origin.x),
++        @"y": @(boundingBox.origin.y),
++        @"width": @(boundingBox.size.width),
++        @"height": @(boundingBox.size.height),
++        @"topLeftX": @(rectangleObservation.topLeft.x),
++        @"topLeftY": @(rectangleObservation.topLeft.y),
++        @"topRightX": @(rectangleObservation.topRight.x),
++        @"topRightY": @(rectangleObservation.topRight.y),
++        @"bottomLeftX": @(rectangleObservation.bottomLeft.x),
++        @"bottomLeftY": @(rectangleObservation.bottomLeft.y),
++        @"bottomRightX": @(rectangleObservation.bottomRight.x),
++        @"bottomRightY": @(rectangleObservation.bottomRight.y)
++    };
++}
++
++static NSArray<NSValue*>* CreateTokenRanges(NSString* text) {
++    NSMutableArray<NSValue*>* tokenRanges = [NSMutableArray array];
++
++    [text enumerateSubstringsInRange:NSMakeRange(0, text.length)
++                             options:NSStringEnumerationByWords | NSStringEnumerationSubstringNotRequired
++                          usingBlock:^(NSString* _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL* stop) {
++        if (substringRange.length > 0) {
++            [tokenRanges addObject:[NSValue valueWithRange:substringRange]];
++        }
++    }];
++
++    if (tokenRanges.count == 0 && text.length > 0) {
++        [tokenRanges addObject:[NSValue valueWithRange:NSMakeRange(0, text.length)]];
++    }
++
++    return tokenRanges;
++}
++
++static void AppendRecognizedTextObservations(NSMutableArray* textObservations, VNRecognizedText* recognizedText, VNRecognizedTextObservation* fallbackObservation) {
++    NSString* text = recognizedText.string;
++    if (text.length == 0) {
++        return;
++    }
++
++    NSArray<NSValue*>* tokenRanges = CreateTokenRanges(text);
++    NSUInteger appendedCount = 0;
++
++    for (NSValue* tokenRangeValue in tokenRanges) {
++        NSRange tokenRange = tokenRangeValue.rangeValue;
++        if (tokenRange.length == 0) {
++            continue;
++        }
++
++        NSString* tokenText = [text substringWithRange:tokenRange];
++        NSError* rangeError = nil;
++        VNRectangleObservation* tokenObservation = [recognizedText boundingBoxForRange:tokenRange error:&rangeError];
++
++        if (tokenObservation && tokenText.length > 0) {
++            [textObservations addObject:CreateObservationData(tokenText, recognizedText.confidence, tokenObservation)];
++            appendedCount++;
++        }
++    }
++
++    if (appendedCount == 0) {
++        [textObservations addObject:CreateObservationData(text, recognizedText.confidence, fallbackObservation)];
++    }
++}
++
+ CGImageRef CreateCGImageFromPath(const char* path, char** error) {
+     if (!path || !error) {
+         if (error) *error = strdup("Invalid parameters");
+@@ -160,18 +302,9 @@ OCRResult* perform_ocr(CGImageRef image, const OCROptions* options) {
+                     if (bestCandidate) {
+                         NSString* text = bestCandidate.string;
+                         if (text.length > 0) {
+-                            // Store observation data (native macOS coordinates, no conversion)
+-                            CGRect boundingBox = observation.boundingBox;
+-                            NSDictionary* obsData = @{
+-                                @"text": text,
+-                                @"confidence": @(bestCandidate.confidence),
+-                                @"x": @(boundingBox.origin.x),
+-                                @"y": @(boundingBox.origin.y),
+-                                @"width": @(boundingBox.size.width),
+-                                @"height": @(boundingBox.size.height)
+-                            };
+-                            [textObservations addObject:obsData];
++                            AppendRecognizedTextObservations(textObservations, bestCandidate, observation);
+                             
++                            CGRect boundingBox = observation.boundingBox;
+                             if (recognizedText.length > 0) {
+                                 if (boundingBox.origin.y < 0.1) {
+                                     [recognizedText appendString:@"\n"];
+@@ -255,6 +388,14 @@ OCRResult* perform_ocr(CGImageRef image, const OCROptions* options) {
+                         obs->y = [obsData[@"y"] doubleValue];
+                         obs->width = [obsData[@"width"] doubleValue];
+                         obs->height = [obsData[@"height"] doubleValue];
++                        obs->top_left_x = [obsData[@"topLeftX"] doubleValue];
++                        obs->top_left_y = [obsData[@"topLeftY"] doubleValue];
++                        obs->top_right_x = [obsData[@"topRightX"] doubleValue];
++                        obs->top_right_y = [obsData[@"topRightY"] doubleValue];
++                        obs->bottom_left_x = [obsData[@"bottomLeftX"] doubleValue];
++                        obs->bottom_left_y = [obsData[@"bottomLeftY"] doubleValue];
++                        obs->bottom_right_x = [obsData[@"bottomRightX"] doubleValue];
++                        obs->bottom_right_y = [obsData[@"bottomRightY"] doubleValue];
+                     }
+                 }
+             }
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/src/index.d.ts b/node_modules/@cherrystudio/mac-system-ocr/src/index.d.ts
+index 5b58b12..6fd4a14 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/src/index.d.ts
++++ b/node_modules/@cherrystudio/mac-system-ocr/src/index.d.ts
+@@ -19,6 +19,12 @@ interface TextObservation {
+   y: number;       // y coordinate from Vision Framework (0.0-1.0, bottom-left origin)
+   width: number;   // width from Vision Framework (0.0-1.0)
+   height: number;  // height from Vision Framework (0.0-1.0)
++  quadrilateral: {
++    topLeft: { x: number; y: number };
++    topRight: { x: number; y: number };
++    bottomLeft: { x: number; y: number };
++    bottomRight: { x: number; y: number };
++  };
+ }
+ 
+ declare class OCRResult {
+@@ -36,6 +42,14 @@ declare class MacOCR {
+   static readonly RECOGNITION_LEVEL_FAST: 0;
+   static readonly RECOGNITION_LEVEL_ACCURATE: 1;
+ 
++  /**
++   * Get supported OCR recognition languages on the current macOS system.
++   * @param options - Recognition configuration
++   */
++  static getSupportedRecognitionLanguages(
++    options?: Pick<RecognizeOptions, 'recognitionLevel'>,
++  ): Promise<string[]>;
++
+   /**
+    * Perform OCR text recognition
+    * @param imagePath - Image file path
+diff --git a/node_modules/@cherrystudio/mac-system-ocr/src/index.js b/node_modules/@cherrystudio/mac-system-ocr/src/index.js
+index dd25ab9..e83e0ac 100644
+--- a/node_modules/@cherrystudio/mac-system-ocr/src/index.js
++++ b/node_modules/@cherrystudio/mac-system-ocr/src/index.js
+@@ -1,4 +1,4 @@
+-const { recognize, recognizeBatch, recognizeBuffer, recognizeBatchFromBuffer } = require('bindings')(
++const { getSupportedRecognitionLanguages, recognize, recognizeBatch, recognizeBuffer, recognizeBatchFromBuffer } = require('bindings')(
+   { 
+     bindings: 'mac_system_ocr' ,
+     module_root: __dirname + '/..'
+@@ -36,6 +36,28 @@ class MacOCR {
+   static get RECOGNITION_LEVEL_FAST() { return 0; }
+   static get RECOGNITION_LEVEL_ACCURATE() { return 1; }
+ 
++  /**
++   * Get supported OCR recognition languages on the current macOS system.
++   * @param {Object} [options]
++   * @param {number} [options.recognitionLevel=MacOCR.RECOGNITION_LEVEL_ACCURATE]
++   * @returns {Promise<string[]>}
++   */
++  static async getSupportedRecognitionLanguages(options = {}) {
++    const normalizedOptions = {
++      recognitionLevel: options.recognitionLevel ?? MacOCR.RECOGNITION_LEVEL_ACCURATE
++    };
++
++    if (![MacOCR.RECOGNITION_LEVEL_FAST, MacOCR.RECOGNITION_LEVEL_ACCURATE].includes(normalizedOptions.recognitionLevel)) {
++      throw new Error('Recognition level must be MacOCR.RECOGNITION_LEVEL_FAST or MacOCR.RECOGNITION_LEVEL_ACCURATE');
++    }
++
++    try {
++      return getSupportedRecognitionLanguages(normalizedOptions);
++    } catch (error) {
++      throw new Error(`Failed to load supported OCR recognition languages: ${error.message}`);
++    }
++  }
++
+   /**
+    * Perform OCR text recognition
+    * @param {string} imagePath - Image file path
