@@ -8,7 +8,7 @@
   <img src="./docs/assets/readme-screenshot.png" alt="veil screenshot" width="720" />
 </p>
 
-veil은 **macOS용 Electron 데스크톱 앱**입니다.  
+veil은 **macOS용 PDF Readable 변환 Electron 데스크톱 앱**입니다.  
 이미지로만 구성된 PDF를 입력받아, 원본 페이지 모양은 유지한 채 **검색 가능한 텍스트 레이어를 추가한 searchable PDF**로 저장합니다.
 
 이 앱은 Apple의 온디바이스 OCR 스택을 사용하며, 전체 처리는 **오프라인 로컬 환경**에서만 동작합니다.
