@@ -1,4 +1,4 @@
-import { copyFile, rm } from 'node:fs/promises'
+import { rm } from 'node:fs/promises'
 import path from 'node:path'
 import { ChildProcess, fork } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
@@ -485,23 +485,12 @@ export class QueueManager {
 
       const outputPath = createOutputFilePath(nextItem.inputPath, outputDirectory)
 
-      if (nextItem.detection === 'already-searchable') {
-        await copyFile(nextItem.inputPath, outputPath)
-        this.state = this.replaceItem(nextItem.id, item =>
-          withUpdatedTimestamp(item, {
-            status: 'completed',
-            outputPath,
-            completedPages: item.totalPages,
-            progressPercent: 100,
-            currentPage: null,
-            message: this.t('queue.alreadySearchableCopied')
-          })
-        )
-        this.emitStateChanged()
-        continue
-      }
-
-      this.launchWorker(nextItem, outputPath, effectiveRuntime.maxConcurrentPagesPerJob)
+      this.launchWorker(
+        nextItem,
+        outputPath,
+        effectiveRuntime.maxConcurrentPagesPerJob,
+        nextItem.detection === 'already-searchable'
+      )
     }
 
     if (
@@ -518,7 +507,8 @@ export class QueueManager {
   private launchWorker(
     item: QueueListItem,
     outputPath: string,
-    pageConcurrency: number
+    pageConcurrency: number,
+    rebuildFromImages: boolean
   ) {
     const workerMessage: WorkerStartJobMessage = {
       type: 'start-job',
@@ -526,6 +516,7 @@ export class QueueManager {
       inputPath: item.inputPath,
       outputPath,
       fontPath: this.resolveFontPath(),
+      rebuildFromImages,
       recognitionLanguages: this.state.settings.recognitionLanguages,
       minimumConfidence: this.state.settings.processing.values.minimumConfidence,
       rasterScale: this.state.settings.processing.values.rasterScale,
@@ -636,6 +627,7 @@ export class QueueManager {
       case 'job-completed':
         this.currentWorkers.delete(message.jobId)
         this.temporaryOutputPaths.delete(message.jobId)
+        const completedItem = this.findItem(message.jobId)
         this.state = this.replaceItem(message.jobId, item =>
           withUpdatedTimestamp(item, {
             status: 'completed',
@@ -643,7 +635,10 @@ export class QueueManager {
             completedPages: message.totalPages,
             currentPage: null,
             progressPercent: 100,
-            message: this.t('queue.savedSuccess')
+            message:
+              completedItem?.detection === 'already-searchable'
+                ? this.t('queue.alreadySearchableCopied')
+                : this.t('queue.savedSuccess')
           })
         )
         this.emitStateChanged()

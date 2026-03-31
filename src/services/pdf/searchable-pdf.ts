@@ -63,6 +63,15 @@ export interface SearchablePdfBuildInput {
   inputPdfBytes: Uint8Array
   ocrPages: OcrPageResult[]
   fontPath: string
+  rebuildFromImages?: boolean
+  sourcePageImages?: SearchablePdfSourcePageImage[]
+}
+
+export interface SearchablePdfSourcePageImage {
+  pageIndex: number
+  pageWidth: number
+  pageHeight: number
+  imageBuffer: Uint8Array
 }
 
 function sanitizePdfText(text: string): string {
@@ -321,8 +330,6 @@ export function createInvisibleTextPlacement(
     )
 
     if (xUnit && quadWidth > 0 && quadHeight > 0) {
-      // Keep rotation from the baseline, but rebuild the Y axis as a strict
-      // orthogonal vector so accumulated OCR skew does not shear text upward.
       const yUnit = {
         x: -xUnit.y,
         y: xUnit.x
@@ -499,7 +506,9 @@ export function appendInvisibleTextLayerToPage(
 export async function buildSearchablePdf(
   input: SearchablePdfBuildInput
 ): Promise<Uint8Array> {
-  const document = await PDFDocument.load(input.inputPdfBytes)
+  const document = input.rebuildFromImages
+    ? await buildSearchablePdfFromImages(input.sourcePageImages)
+    : await PDFDocument.load(input.inputPdfBytes)
   document.registerFontkit(fontkit)
 
   const fontBytes = await readFile(input.fontPath)
@@ -522,4 +531,35 @@ export async function buildSearchablePdf(
   return document.save({
     useObjectStreams: false
   })
+}
+
+async function buildSearchablePdfFromImages(
+  sourcePageImages: SearchablePdfSourcePageImage[] | undefined
+) {
+  if (!sourcePageImages || sourcePageImages.length === 0) {
+    throw new Error(
+      'Rasterized page images are required to rebuild an already searchable PDF.'
+    )
+  }
+
+  const document = await PDFDocument.create()
+
+  for (const sourcePageImage of [...sourcePageImages].sort(
+    (left, right) => left.pageIndex - right.pageIndex
+  )) {
+    const page = document.addPage([
+      sourcePageImage.pageWidth,
+      sourcePageImage.pageHeight
+    ])
+    const embeddedImage = await document.embedPng(sourcePageImage.imageBuffer)
+
+    page.drawImage(embeddedImage, {
+      x: 0,
+      y: 0,
+      width: sourcePageImage.pageWidth,
+      height: sourcePageImage.pageHeight
+    })
+  }
+
+  return document
 }

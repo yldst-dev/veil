@@ -1,9 +1,12 @@
+import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import os from 'node:os'
 import path from 'node:path'
 
-import { PDFDocument } from 'pdf-lib'
+import { PDFDocument, StandardFonts } from 'pdf-lib'
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs'
 import { describe, expect, it } from 'vitest'
 
+import { PdfPageRasterizer } from '@/services/pdf/pdf-rasterizer'
 import {
   buildSearchablePdf,
   createInvisibleTextPlacement
@@ -57,6 +60,86 @@ describe('buildSearchablePdf', () => {
     expect(extracted).toContain('Hello OCR')
 
     await pdfJsDocument.destroy()
+  })
+
+  it('rebuilds already searchable PDFs from page images so stale text is removed', async () => {
+    const pdf = await PDFDocument.create()
+    const font = await pdf.embedFont(StandardFonts.Helvetica)
+    const page = pdf.addPage([600, 800])
+    page.drawText('Old Text Layer', {
+      x: 72,
+      y: 620,
+      size: 28,
+      font
+    })
+
+    const inputPdfBytes = await pdf.save({ useObjectStreams: false })
+    const temporaryDirectory = await mkdtemp(
+      path.join(os.tmpdir(), 'veil-searchable-pdf-')
+    )
+    const inputPath = path.join(temporaryDirectory, 'already-searchable.pdf')
+    await writeFile(inputPath, inputPdfBytes)
+
+    const rasterizer = new PdfPageRasterizer(inputPath)
+
+    try {
+      const rasterizedPage = await rasterizer.rasterizePage(0, 2)
+      const outputBytes = await buildSearchablePdf({
+        inputPdfBytes,
+        fontPath: path.join(
+          process.cwd(),
+          'resources',
+          'fonts',
+          'NotoSansCJKkr-Regular.otf'
+        ),
+        rebuildFromImages: true,
+        sourcePageImages: [
+          {
+            pageIndex: rasterizedPage.pageIndex,
+            pageWidth: rasterizedPage.pageWidth,
+            pageHeight: rasterizedPage.pageHeight,
+            imageBuffer: rasterizedPage.imageBuffer
+          }
+        ],
+        ocrPages: [
+          {
+            pageIndex: 0,
+            text: 'New OCR Layer',
+            observations: [
+              {
+                text: 'New OCR Layer',
+                confidence: 0.98,
+                boundingBox: {
+                  x: 0.12,
+                  y: 0.74,
+                  width: 0.34,
+                  height: 0.05
+                }
+              }
+            ]
+          }
+        ]
+      })
+
+      const pdfJsDocument = await getDocument({
+        data: outputBytes,
+        isEvalSupported: false,
+        useSystemFonts: true
+      }).promise
+      const rebuiltPage = await pdfJsDocument.getPage(1)
+      const textContent = await rebuiltPage.getTextContent()
+      const extracted = textContent.items
+        .map(item => ('str' in item ? item.str : ''))
+        .join(' ')
+
+      expect(extracted).toContain('New OCR Layer')
+      expect(extracted).not.toContain('Old Text Layer')
+
+      await pdfJsDocument.destroy()
+    } finally {
+      await rasterizer.destroy().catch(() => undefined)
+      await rm(temporaryDirectory, { recursive: true, force: true })
+    }
   })
 
   it('stabilizes placement by using rotation without preserving OCR shear', () => {

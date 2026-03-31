@@ -6,6 +6,7 @@ export const workerStartJobMessageSchema = z.object({
   inputPath: z.string(),
   outputPath: z.string(),
   fontPath: z.string(),
+  rebuildFromImages: z.boolean().default(false),
   recognitionLanguages: z.array(z.string()).min(1),
   minimumConfidence: z.number().min(0).max(1).default(0.3),
   rasterScale: z.number().min(1).max(4).default(2),

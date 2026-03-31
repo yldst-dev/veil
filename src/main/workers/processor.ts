@@ -1,9 +1,13 @@
 import { readFile, rename, rm, writeFile } from 'node:fs/promises'
 
 import { MacSystemOCRProvider } from '@/services/ocr/mac-system-ocr-provider'
+import type { OcrPageResult } from '@/services/ocr/types'
 import { createTemporaryOutputPath } from '@/services/files/path-utils'
 import { PdfPageRasterizer } from '@/services/pdf/pdf-rasterizer'
-import { buildSearchablePdf } from '@/services/pdf/searchable-pdf'
+import {
+  buildSearchablePdf,
+  type SearchablePdfSourcePageImage
+} from '@/services/pdf/searchable-pdf'
 import { workerStartJobMessageSchema } from '@/shared/worker'
 
 let currentTemporaryOutputPath: string | null = null
@@ -40,7 +44,11 @@ async function processJob(rawMessage: unknown) {
       outputPath: message.outputPath
     })
 
-    const ocrPages = new Array(totalPages)
+    const ocrPages: Array<OcrPageResult | undefined> = new Array(totalPages)
+    const sourcePageImages: Array<SearchablePdfSourcePageImage | undefined> | null =
+      message.rebuildFromImages
+      ? new Array(totalPages)
+      : null
     const workerCount = Math.min(totalPages, message.pageConcurrency)
     let nextPageIndex = 0
     let completedPages = 0
@@ -59,6 +67,14 @@ async function processJob(rawMessage: unknown) {
             pageIndex,
             message.rasterScale
           )
+          if (sourcePageImages) {
+            sourcePageImages[pageIndex] = {
+              pageIndex: rasterizedPage.pageIndex,
+              pageWidth: rasterizedPage.pageWidth,
+              pageHeight: rasterizedPage.pageHeight,
+              imageBuffer: rasterizedPage.imageBuffer
+            }
+          }
 
           const ocrPage = await ocrProvider.recognizePage({
             imageBuffer: rasterizedPage.imageBuffer,
@@ -85,8 +101,26 @@ async function processJob(rawMessage: unknown) {
     const inputPdfBytes = new Uint8Array(await readFile(message.inputPath))
     const outputBytes = await buildSearchablePdf({
       inputPdfBytes,
-      ocrPages,
-      fontPath: message.fontPath
+      ocrPages: ocrPages.map((ocrPage, pageIndex) => {
+        if (!ocrPage) {
+          throw new Error(
+            `Failed to OCR page ${pageIndex + 1} before writing the PDF.`
+          )
+        }
+
+        return ocrPage
+      }),
+      fontPath: message.fontPath,
+      rebuildFromImages: message.rebuildFromImages,
+      sourcePageImages: sourcePageImages?.map((pageImage, pageIndex) => {
+        if (!pageImage) {
+          throw new Error(
+            `Failed to rebuild page ${pageIndex + 1} before writing the PDF.`
+          )
+        }
+
+        return pageImage
+      })
     })
 
     currentTemporaryOutputPath = createTemporaryOutputPath(message.outputPath)
