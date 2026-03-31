@@ -150,7 +150,7 @@ export async function resolveLatestReleaseInfo(
   return {
     latestVersion,
     releaseName: latestRelease.name,
-    releaseUrl: latestRelease.html_url,
+    releaseUrl: getRepositoryReleasesUrl(),
     publishedAt: latestRelease.published_at,
     isUpdateAvailable: compareVersions(currentVersion, latestVersion) < 0
   }

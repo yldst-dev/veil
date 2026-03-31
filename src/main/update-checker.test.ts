@@ -48,7 +48,7 @@ describe('resolveLatestReleaseInfo', () => {
     await expect(resolveLatestReleaseInfo('0.1.0')).resolves.toEqual({
       latestVersion: '0.2.0',
       releaseName: 'v0.2.0',
-      releaseUrl: 'https://github.com/yldst-dev/veil/releases/tag/v0.2.0',
+      releaseUrl: 'https://github.com/yldst-dev/veil/releases',
       publishedAt: '2026-03-30T00:00:00.000Z',
       isUpdateAvailable: true
     })
