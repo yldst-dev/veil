@@ -10,6 +10,7 @@ import { uiLocaleSchema } from '@/shared/i18n'
 
 export const ipcChannels = {
   getState: 'app:get-state',
+  checkForAppUpdates: 'app:check-for-updates',
   pickPdfFiles: 'files:pick-pdfs',
   setOutputDirectory: 'files:set-output-directory',
   setLocale: 'app:set-locale',
@@ -19,6 +20,7 @@ export const ipcChannels = {
   cancelJob: 'queue:cancel-job',
   removeJob: 'queue:remove-job',
   openOutputTarget: 'files:open-output-target',
+  openAppReleasePage: 'app:open-release-page',
   stateChanged: 'events:state-changed'
 } as const
 
@@ -79,6 +81,7 @@ export type QueueActionResult = z.infer<typeof queueActionResultSchema>
 
 export interface VeilDesktopApi {
   getState: () => Promise<z.infer<typeof appStateSchema>>
+  checkForAppUpdates: () => Promise<z.infer<typeof appStateSchema>>
   pickPdfFiles: () => Promise<string[]>
   pickOutputDirectory: () => Promise<string | null>
   setLocale: (input: SetLocaleInput) => Promise<z.infer<typeof appStateSchema>>
@@ -90,6 +93,7 @@ export interface VeilDesktopApi {
   cancelJob: (input: CancelJobInput) => Promise<QueueActionResult>
   removeJob: (input: RemoveJobInput) => Promise<QueueActionResult>
   openOutputTarget: (input: OutputTargetInput) => Promise<void>
+  openAppReleasePage: () => Promise<void>
   subscribeToStateChanged: (
     listener: (event: StateChangedEvent) => void
   ) => () => void

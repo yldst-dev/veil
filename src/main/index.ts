@@ -82,6 +82,7 @@ app.whenReady().then(async () => {
 
   registerIpcHandlers(queueManager)
   createMainWindow()
+  void queueManager.checkForUpdates()
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

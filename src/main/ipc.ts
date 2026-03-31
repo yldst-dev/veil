@@ -16,6 +16,9 @@ import { QueueManager } from '@/main/queue-manager'
 
 export function registerIpcHandlers(queueManager: QueueManager) {
   ipcMain.handle(ipcChannels.getState, () => queueManager.getState())
+  ipcMain.handle(ipcChannels.checkForAppUpdates, () =>
+    queueManager.checkForUpdates()
+  )
 
   ipcMain.handle(ipcChannels.pickPdfFiles, async () => {
     const locale = queueManager.getState().settings.locale
@@ -87,6 +90,19 @@ export function registerIpcHandlers(queueManager: QueueManager) {
     if (error) {
       logger.warn('Failed to open output target', { error, path: payload.path })
       throw new Error(error)
+    }
+  })
+
+  ipcMain.handle(ipcChannels.openAppReleasePage, async () => {
+    const releasePageUrl = queueManager.getReleasePageUrl()
+    try {
+      await shell.openExternal(releasePageUrl)
+    } catch (error) {
+      logger.warn('Failed to open release page', {
+        error: error instanceof Error ? error.message : String(error),
+        releasePageUrl
+      })
+      throw error
     }
   })
 

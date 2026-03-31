@@ -31,6 +31,15 @@ function createEmptyState(): AppState {
         values: { ...defaultProcessingTuningValues }
       }
     },
+    update: {
+      currentVersion: '0.0.0',
+      status: 'idle',
+      latestVersion: null,
+      releaseName: null,
+      releaseUrl: null,
+      publishedAt: null,
+      checkedAt: null
+    },
     isProcessing: false,
     activeJobId: null
   })
@@ -97,7 +106,12 @@ export function useVeilDesktop() {
 
     try {
       const result = await action()
+      const stateResult = appStateSchema.safeParse(result)
       const queueResult = queueActionResultSchema.safeParse(result)
+
+      if (stateResult.success) {
+        applyState(stateResult.data)
+      }
 
       if (queueResult.success) {
         applyState(queueResult.data.state)
@@ -122,7 +136,7 @@ export function useVeilDesktop() {
       setIsAddingFiles(true)
 
       try {
-      const filePaths = await runAction(() => window.veilApp.pickPdfFiles())
+        const filePaths = await runAction(() => window.veilApp.pickPdfFiles())
 
         if (!filePaths || filePaths.length === 0) {
           return
@@ -228,6 +242,16 @@ export function useVeilDesktop() {
           path
         })
       )
+    },
+    async checkForAppUpdates() {
+      const nextState = await runAction(() => window.veilApp.checkForAppUpdates())
+
+      if (nextState) {
+        applyState(nextState)
+      }
+    },
+    async openAppReleasePage() {
+      await runAction(() => window.veilApp.openAppReleasePage())
     }
   }
 }

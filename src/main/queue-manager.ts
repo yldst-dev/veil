@@ -36,6 +36,10 @@ import {
   getEffectiveProcessingRuntime,
   normalizeProcessingTuningValues
 } from '@/main/processing-config'
+import {
+  getRepositoryReleasesUrl,
+  resolveLatestReleaseInfo
+} from '@/main/update-checker'
 
 const store = new Store<{
   outputDirectory: string | null
@@ -122,6 +126,15 @@ export class QueueManager {
       locale: store.get('locale'),
       processing: normalizeProcessingTuningValues(store.get('processingSettings'))
     },
+    update: {
+      currentVersion: app.getVersion(),
+      status: 'idle',
+      latestVersion: null,
+      releaseName: null,
+      releaseUrl: null,
+      publishedAt: null,
+      checkedAt: null
+    },
     isProcessing: false,
     activeJobId: null
   })
@@ -132,6 +145,7 @@ export class QueueManager {
   private readonly ocrProvider = new MacSystemOCRProvider()
   private queueRunning = false
   private isFillingWorkerPool = false
+  private isCheckingForUpdates = false
   private refillRequested = false
 
   getState(): AppState {
@@ -253,6 +267,63 @@ export class QueueManager {
     }
 
     return this.state
+  }
+
+  async checkForUpdates() {
+    if (this.isCheckingForUpdates) {
+      return this.state
+    }
+
+    this.isCheckingForUpdates = true
+    this.state = this.withRuntimeState({
+      ...this.state,
+      update: {
+        ...this.state.update,
+        status: 'checking'
+      }
+    })
+    this.emitStateChanged()
+
+    try {
+      const releaseInfo = await resolveLatestReleaseInfo(
+        this.state.update.currentVersion
+      )
+
+      this.state = this.withRuntimeState({
+        ...this.state,
+        update: {
+          ...this.state.update,
+          status: releaseInfo.isUpdateAvailable ? 'available' : 'current',
+          latestVersion: releaseInfo.latestVersion,
+          releaseName: releaseInfo.releaseName,
+          releaseUrl: releaseInfo.releaseUrl,
+          publishedAt: releaseInfo.publishedAt,
+          checkedAt: nowIsoString()
+        }
+      })
+    } catch (error) {
+      logger.warn('Failed to check for updates', {
+        error: error instanceof Error ? error.message : String(error)
+      })
+
+      this.state = this.withRuntimeState({
+        ...this.state,
+        update: {
+          ...this.state.update,
+          status: 'error',
+          checkedAt: nowIsoString()
+        }
+      })
+    } finally {
+      this.isCheckingForUpdates = false
+    }
+
+    this.emitStateChanged()
+    return this.state
+  }
+
+  getReleasePageUrl() {
+    return this.state.update.releaseUrl ?? getRepositoryReleasesUrl()
   }
 
   async startProcessing(input: StartProcessingInput): Promise<QueueActionResult> {

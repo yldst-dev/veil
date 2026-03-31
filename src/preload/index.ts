@@ -18,6 +18,11 @@ const veilApi: VeilDesktopApi = {
   async getState() {
     return appStateSchema.parse(await ipcRenderer.invoke(ipcChannels.getState))
   },
+  async checkForAppUpdates() {
+    return appStateSchema.parse(
+      await ipcRenderer.invoke(ipcChannels.checkForAppUpdates)
+    )
+  },
   async pickPdfFiles() {
     return ipcRenderer.invoke(ipcChannels.pickPdfFiles)
   },
@@ -53,6 +58,9 @@ const veilApi: VeilDesktopApi = {
   },
   openOutputTarget(input: OutputTargetInput) {
     return ipcRenderer.invoke(ipcChannels.openOutputTarget, input)
+  },
+  openAppReleasePage() {
+    return ipcRenderer.invoke(ipcChannels.openAppReleasePage)
   },
   subscribeToStateChanged(listener) {
     const wrappedListener = (_event: Electron.IpcRendererEvent, payload: unknown) => {

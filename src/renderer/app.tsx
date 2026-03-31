@@ -41,6 +41,8 @@ function AppScreen({
   cancelJob,
   removeJob,
   openOutputTarget,
+  checkForAppUpdates,
+  openAppReleasePage,
   setLocale,
   setProcessingSettings
 }: ReturnType<typeof useVeilDesktop>) {
@@ -116,6 +118,37 @@ function AppScreen({
       step: 0.05
     }
   ]
+
+  const formattedCheckedAt = state.update.checkedAt
+    ? new Intl.DateTimeFormat(locale, {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      }).format(new Date(state.update.checkedAt))
+    : t('update.notCheckedYet')
+
+  const latestVersionLabel = state.update.latestVersion
+    ? `v${state.update.latestVersion}`
+    : null
+
+  const updateStatusLabel =
+    state.update.status === 'checking'
+      ? t('update.status.checking')
+      : state.update.status === 'available'
+        ? t('update.status.available', {
+            value: latestVersionLabel ?? `v${state.update.currentVersion}`
+          })
+        : state.update.status === 'current'
+          ? t('update.status.current')
+          : state.update.status === 'error'
+            ? t('update.status.error')
+            : t('update.status.idle')
+
+  const updateStatusClass =
+    state.update.status === 'available'
+      ? 'text-emerald-600'
+      : state.update.status === 'error'
+        ? 'text-rose-600'
+        : 'text-zinc-700'
 
   function extractPdfPaths(fileList: FileList): string[] {
     return Array.from(fileList)
@@ -385,14 +418,68 @@ function AppScreen({
               <p className="text-[13px] leading-relaxed text-zinc-500 mt-2 max-w-[260px]">
                 {t('about.description')}
               </p>
-              <div className="mt-6 w-full max-w-[320px] rounded border border-zinc-200 bg-white px-3 py-2 text-left">
-                <div className="text-[13px] font-medium text-zinc-600">{t('field.ocrRecognitionLocales')}</div>
-                <div className="mt-1 text-xs leading-relaxed text-zinc-500 break-all">
-                  {state.settings.supportedRecognitionLanguages.join(', ')}
+              <div className="mt-6 flex w-full max-w-[320px] flex-col gap-3 text-left">
+                <div className="rounded border border-zinc-200 bg-white px-3 py-2">
+                  <div className="text-[13px] font-medium text-zinc-600">
+                    {t('field.currentVersion')}
+                  </div>
+                  <div className="mt-1 text-sm font-medium text-zinc-800">
+                    v{state.update.currentVersion}
+                  </div>
+                  <div className="mt-1 text-xs text-zinc-400">{t('about.meta')}</div>
                 </div>
-              </div>
-              <div className="mt-4 flex flex-col gap-1 text-xs text-zinc-400">
-                 <p>{t('about.meta')}</p>
+                <div className="rounded border border-zinc-200 bg-white px-3 py-2">
+                  <div className="text-[13px] font-medium text-zinc-600">
+                    {t('field.updates')}
+                  </div>
+                  <div className={`mt-1 text-sm font-medium ${updateStatusClass}`}>
+                    {updateStatusLabel}
+                  </div>
+                  {latestVersionLabel && (
+                    <div className="mt-1 text-xs text-zinc-500">
+                      {t('field.latestVersion', {
+                        value: latestVersionLabel
+                      })}
+                    </div>
+                  )}
+                  {state.update.releaseName && (
+                    <div className="mt-1 text-xs text-zinc-400">
+                      {state.update.releaseName}
+                    </div>
+                  )}
+                  <div className="mt-2 text-xs text-zinc-400">
+                    {t('field.lastChecked')}: {formattedCheckedAt}
+                  </div>
+                  <div className="mt-3 flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => void checkForAppUpdates()}
+                      disabled={isActing || state.update.status === 'checking'}
+                      className="h-7 flex-1 px-3 text-xs shadow-none"
+                    >
+                      {state.update.status === 'checking'
+                        ? t('action.checkingUpdates')
+                        : t('action.checkUpdates')}
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={() => void openAppReleasePage()}
+                      disabled={isActing}
+                      className="h-7 flex-1 px-3 text-xs shadow-none font-medium bg-zinc-900 hover:bg-zinc-800 text-white"
+                    >
+                      {t('action.openReleasePage')}
+                    </Button>
+                  </div>
+                </div>
+                <div className="rounded border border-zinc-200 bg-white px-3 py-2">
+                  <div className="text-[13px] font-medium text-zinc-600">
+                    {t('field.ocrRecognitionLocales')}
+                  </div>
+                  <div className="mt-1 text-xs leading-relaxed text-zinc-500 break-all">
+                    {state.settings.supportedRecognitionLanguages.join(', ')}
+                  </div>
+                </div>
               </div>
             </div>
           )}

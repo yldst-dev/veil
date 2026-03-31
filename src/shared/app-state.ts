@@ -54,6 +54,24 @@ export const processingSettingsSchema = z.object({
   values: processingTuningValuesSchema
 })
 
+export const appUpdateStatusSchema = z.enum([
+  'idle',
+  'checking',
+  'available',
+  'current',
+  'error'
+])
+
+export const appUpdateSchema = z.object({
+  currentVersion: z.string(),
+  status: appUpdateStatusSchema,
+  latestVersion: z.string().nullable(),
+  releaseName: z.string().nullable(),
+  releaseUrl: z.string().nullable(),
+  publishedAt: z.string().nullable(),
+  checkedAt: z.string().nullable()
+})
+
 export const queueItemSchema = z.object({
   id: z.string(),
   inputPath: z.string(),
@@ -82,6 +100,7 @@ export const appSettingsSchema = z.object({
 export const appStateSchema = z.object({
   items: z.array(queueItemSchema),
   settings: appSettingsSchema,
+  update: appUpdateSchema,
   isProcessing: z.boolean(),
   activeJobId: z.string().nullable()
 })
@@ -90,6 +109,8 @@ export type QueueItemStatus = z.infer<typeof queueItemStatusSchema>
 export type PdfDetection = z.infer<typeof pdfDetectionSchema>
 export type ProcessingTuningValues = z.infer<typeof processingTuningValuesSchema>
 export type ProcessingSettings = z.infer<typeof processingSettingsSchema>
+export type AppUpdateStatus = z.infer<typeof appUpdateStatusSchema>
+export type AppUpdate = z.infer<typeof appUpdateSchema>
 export type QueueListItem = z.infer<typeof queueItemSchema>
 export type AppSettings = z.infer<typeof appSettingsSchema>
 export type AppState = z.infer<typeof appStateSchema>
