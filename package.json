@@ -1,6 +1,6 @@
 {
   "name": "veil-ocr",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Offline macOS desktop app that converts image-only PDFs into searchable PDFs using Apple's on-device OCR stack.",
   "private": true,
   "license": "GPL-3.0",

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 
 import {
   Globe02Icon,
@@ -17,6 +17,7 @@ import type { ProcessingTuningValues } from '@/shared/app-state'
 type FileWithPath = File & { path?: string }
 type Tab = 'convert' | 'queue' | 'settings' | 'about'
 type ProcessingField = keyof ProcessingTuningValues
+type AboutSection = 'updates' | 'ocrLocales'
 
 export function App() {
   const desktop = useVeilDesktop()
@@ -49,6 +50,12 @@ function AppScreen({
   const { t, locale, localeOptions } = useI18n()
   const [activeTab, setActiveTab] = useState<Tab>('convert')
   const [isDragging, setIsDragging] = useState(false)
+  const [aboutSections, setAboutSections] = useState<
+    Record<AboutSection, boolean>
+  >({
+    updates: true,
+    ocrLocales: false
+  })
   const dragDepthRef = useRef(0)
   const [processingDrafts, setProcessingDrafts] = useState<
     Record<ProcessingField, string>
@@ -129,6 +136,13 @@ function AppScreen({
   const latestVersionLabel = state.update.latestVersion
     ? `v${state.update.latestVersion}`
     : null
+  const localesPreview = state.settings.supportedRecognitionLanguages
+    .slice(0, 4)
+    .join(', ')
+  const localesSummary =
+    state.settings.supportedRecognitionLanguages.length > 4
+      ? `${localesPreview}, ...`
+      : localesPreview
 
   const updateStatusLabel =
     state.update.status === 'checking'
@@ -225,6 +239,13 @@ function AppScreen({
     await setProcessingSettings({
       [field]: state.settings.processing.defaults[field]
     } as Pick<ProcessingTuningValues, ProcessingField>)
+  }
+
+  function toggleAboutSection(section: AboutSection) {
+    setAboutSections(current => ({
+      ...current,
+      [section]: !current[section]
+    }))
   }
 
   return (
@@ -412,73 +433,82 @@ function AppScreen({
           )}
 
           {activeTab === 'about' && (
-            <div className="h-full border border-zinc-200 rounded flex flex-col items-center justify-center p-6 text-center bg-zinc-50/50">
-              <HugeiconsIcon icon={ScanIcon} className="size-8 text-zinc-300 mb-3" />
-              <h1 className="text-base font-medium text-zinc-900">{t('app.title')}</h1>
-              <p className="text-[13px] leading-relaxed text-zinc-500 mt-2 max-w-[260px]">
-                {t('about.description')}
-              </p>
-              <div className="mt-6 flex w-full max-w-[320px] flex-col gap-3 text-left">
-                <div className="rounded border border-zinc-200 bg-white px-3 py-2">
-                  <div className="text-[13px] font-medium text-zinc-600">
-                    {t('field.currentVersion')}
-                  </div>
-                  <div className="mt-1 text-sm font-medium text-zinc-800">
-                    v{state.update.currentVersion}
-                  </div>
-                  <div className="mt-1 text-xs text-zinc-400">{t('about.meta')}</div>
-                </div>
-                <div className="rounded border border-zinc-200 bg-white px-3 py-2">
-                  <div className="text-[13px] font-medium text-zinc-600">
-                    {t('field.updates')}
-                  </div>
-                  <div className={`mt-1 text-sm font-medium ${updateStatusClass}`}>
-                    {updateStatusLabel}
-                  </div>
-                  {latestVersionLabel && (
-                    <div className="mt-1 text-xs text-zinc-500">
-                      {t('field.latestVersion', {
-                        value: latestVersionLabel
-                      })}
+            <div className="h-full overflow-y-auto rounded border border-zinc-200 bg-zinc-50/50 p-4">
+              <div className="mx-auto flex w-full max-w-[320px] flex-col items-center text-center">
+                <HugeiconsIcon icon={ScanIcon} className="mb-3 size-8 text-zinc-300" />
+                <h1 className="text-base font-medium text-zinc-900">{t('app.title')}</h1>
+                <p className="mt-2 max-w-[260px] text-[13px] leading-relaxed text-zinc-500">
+                  {t('about.description')}
+                </p>
+                <div className="mt-6 flex w-full flex-col gap-3 text-left">
+                  <div className="rounded border border-zinc-200 bg-white px-3 py-2">
+                    <div className="text-[13px] font-medium text-zinc-600">
+                      {t('field.currentVersion')}
                     </div>
-                  )}
-                  {state.update.releaseName && (
-                    <div className="mt-1 text-xs text-zinc-400">
-                      {state.update.releaseName}
+                    <div className="mt-1 text-sm font-medium text-zinc-800">
+                      v{state.update.currentVersion}
                     </div>
-                  )}
-                  <div className="mt-2 text-xs text-zinc-400">
-                    {t('field.lastChecked')}: {formattedCheckedAt}
+                    <div className="mt-1 text-xs text-zinc-400">{t('about.meta')}</div>
                   </div>
-                  <div className="mt-3 flex gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => void checkForAppUpdates()}
-                      disabled={isActing || state.update.status === 'checking'}
-                      className="h-7 flex-1 px-3 text-xs shadow-none"
-                    >
-                      {state.update.status === 'checking'
-                        ? t('action.checkingUpdates')
-                        : t('action.checkUpdates')}
-                    </Button>
-                    <Button
-                      type="button"
-                      onClick={() => void openAppReleasePage()}
-                      disabled={isActing}
-                      className="h-7 flex-1 px-3 text-xs shadow-none font-medium bg-zinc-900 hover:bg-zinc-800 text-white"
-                    >
-                      {t('action.openReleasePage')}
-                    </Button>
-                  </div>
-                </div>
-                <div className="rounded border border-zinc-200 bg-white px-3 py-2">
-                  <div className="text-[13px] font-medium text-zinc-600">
-                    {t('field.ocrRecognitionLocales')}
-                  </div>
-                  <div className="mt-1 text-xs leading-relaxed text-zinc-500 break-all">
-                    {state.settings.supportedRecognitionLanguages.join(', ')}
-                  </div>
+
+                  <AboutDisclosureCard
+                    title={t('field.updates')}
+                    summary={updateStatusLabel}
+                    isOpen={aboutSections.updates}
+                    onToggle={() => toggleAboutSection('updates')}
+                    expandLabel={t('action.expand')}
+                    collapseLabel={t('action.collapse')}
+                  >
+                    {latestVersionLabel && (
+                      <div className="mt-1 text-xs text-zinc-500">
+                        {t('field.latestVersion', {
+                          value: latestVersionLabel
+                        })}
+                      </div>
+                    )}
+                    {state.update.releaseName && (
+                      <div className="mt-1 break-words text-xs text-zinc-400">
+                        {state.update.releaseName}
+                      </div>
+                    )}
+                    <div className="mt-2 text-xs text-zinc-400">
+                      {t('field.lastChecked')}: {formattedCheckedAt}
+                    </div>
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => void checkForAppUpdates()}
+                        disabled={isActing || state.update.status === 'checking'}
+                        className="h-7 min-w-0 px-3 text-xs shadow-none"
+                      >
+                        {state.update.status === 'checking'
+                          ? t('action.checkingUpdates')
+                          : t('action.checkUpdates')}
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={() => void openAppReleasePage()}
+                        disabled={isActing}
+                        className="h-7 min-w-0 px-3 text-xs font-medium text-white shadow-none bg-zinc-900 hover:bg-zinc-800"
+                      >
+                        {t('action.openReleasePage')}
+                      </Button>
+                    </div>
+                  </AboutDisclosureCard>
+
+                  <AboutDisclosureCard
+                    title={t('field.ocrRecognitionLocales')}
+                    summary={localesSummary}
+                    isOpen={aboutSections.ocrLocales}
+                    onToggle={() => toggleAboutSection('ocrLocales')}
+                    expandLabel={t('action.expand')}
+                    collapseLabel={t('action.collapse')}
+                  >
+                    <div className="max-h-32 overflow-y-auto break-all pr-1 text-xs leading-relaxed text-zinc-500">
+                      {state.settings.supportedRecognitionLanguages.join(', ')}
+                    </div>
+                  </AboutDisclosureCard>
                 </div>
               </div>
             </div>
@@ -510,5 +540,44 @@ function LoadingSpinner({ className }: { className?: string }) {
       aria-hidden="true"
       className={`inline-block rounded-full border-2 animate-spin ${className ?? ''}`}
     />
+  )
+}
+
+function AboutDisclosureCard({
+  title,
+  summary,
+  isOpen,
+  onToggle,
+  expandLabel,
+  collapseLabel,
+  children
+}: {
+  title: string
+  summary: string
+  isOpen: boolean
+  onToggle: () => void
+  expandLabel: string
+  collapseLabel: string
+  children: ReactNode
+}) {
+  return (
+    <section className="rounded border border-zinc-200 bg-white">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex w-full items-start justify-between gap-3 px-3 py-2 text-left"
+      >
+        <div className="min-w-0">
+          <div className="text-[13px] font-medium text-zinc-600">{title}</div>
+          <div className="mt-1 break-words text-xs leading-relaxed text-zinc-400">
+            {summary}
+          </div>
+        </div>
+        <span className="shrink-0 rounded-full border border-zinc-200 px-2 py-0.5 text-[11px] font-medium text-zinc-500">
+          {isOpen ? collapseLabel : expandLabel}
+        </span>
+      </button>
+      {isOpen && <div className="border-t border-zinc-200 px-3 py-2">{children}</div>}
+    </section>
   )
 }
